@@ -8,6 +8,7 @@ TOP_WRAPPER=top_wrapper
 FABRIC_FILES_DIR=${BUILD_DIR}/fabric_files
 USER_DESIGN_DIR=${FAB_PROJ_ROOT}/user_design
 USER_DESIGN_VERILOG=${USER_DESIGN_DIR}/${DESIGN}.v
+USER_DESIGN_FILES=${USER_DESIGN_DIR}/*.v
 TOP_WRAPPER_VERILOG=${USER_DESIGN_DIR}/${TOP_WRAPPER}.v
 WAVEFORM_TYPE=fst
 
@@ -49,7 +50,7 @@ build_demo_fabric: mkdir_build
 	FABulous ${FAB_PROJ_ROOT} -ts ./build_fabulous_fabric.tcl
 
 run_yosys: mkdir_build
-	yosys -p "synth_fabulous -top ${TOP_WRAPPER} -json ${BUILD_DIR}/${DESIGN}.json ${CUSTOM_PRIMS}" ${USER_DESIGN_VERILOG} ${TOP_WRAPPER_VERILOG}
+	yosys -p "synth_fabulous -top ${TOP_WRAPPER} -json ${BUILD_DIR}/${DESIGN}.json ${CUSTOM_PRIMS}" ${USER_DESIGN_FILES}
 
 run_nextpnr: mkdir_build
 	FAB_ROOT=${FAB_PROJ_ROOT} /home/marcel/GitHubProjects/nextpnr/build/nextpnr-generic --uarch fabulous --json ${BUILD_DIR}/${DESIGN}.json -o fasm=${BUILD_DIR}/${DESIGN}.fasm
